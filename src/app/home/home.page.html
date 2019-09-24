@@ -1,14 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-title>deepbrown</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+  <ion-item class="top">
+    <input type="button" value="Analyze Damage" (click)="takePicture()" [disabled]="serverCallStatus != ''">
+    <P>&nbsp;{{ serverCallStatus }}</P>
+  </ion-item>
+  <!-- <ion-item style="height:50%"> -->
+    <ion-img *ngIf="pictureName" src="{{ pictureName }}"></ion-img> 
+  <!-- </ion-item> -->
+  <ion-item class="bottom">
+    <ion-grid>
+      <ion-row *ngIf="good_box_confidence_factor > 0">
+        <ion-col class="ion-text-right"> Good box : </ion-col>
+        <ion-col class="ion-float-left"> {{ good_box_confidence_factor }}%</ion-col>
+      </ion-row>
+      <ion-row *ngIf="damaged_box_confidence_factor > 0">
+        <ion-col class="ion-text-right">Damaged box :</ion-col>
+        <ion-col> {{ damaged_box_confidence_factor }}%</ion-col>
+      </ion-row>
+      <ion-row *ngIf="open_box_confidence_factor > 0">
+        <ion-col class="ion-text-right">Open box :</ion-col>
+        <ion-col> {{ open_box_confidence_factor }}%</ion-col>
+      </ion-row>
+      <ion-row *ngIf="errorInfo != ''">
+        <ion-col class="ion-text-right">Error info :</ion-col>
+        <ion-col> {{ this.errorInfo }}</ion-col>
+        <ion-col> New Ip Address : <input type="text"  [(ngModel)]="ipAddress" > <input type="button" value="Retry" (click)="takePicture()" ></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
 </ion-content>
